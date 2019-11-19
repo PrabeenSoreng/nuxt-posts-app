@@ -11,20 +11,7 @@
                   <h1>Newest Posts</h1>
                   <hr />
                 </div>
-                <div class="post">
-                  <a class="post-header post-header-link clickable">
-                    <h4 class="title is-4">Some Title</h4>
-                    <h5 class="subtitle is-5">Some Subtitle</h5>
-                  </a>
-                  <div class="post-content">by Filip Jerga, 27th Jan, 2019</div>
-                </div>
-                <div class="post">
-                  <a class="post-header post-header-link clickable">
-                    <h4 class="title is-4">Some Title</h4>
-                    <h5 class="subtitle is-5">Some Subtitle</h5>
-                  </a>
-                  <div class="post-content">by Filip Jerga, 27th Jan, 2019</div>
-                </div>
+                <PostItem v-for="post in posts" :key="post._id" :post="post" />
               </div>
               <!-- end of post -->
             </div>
@@ -38,15 +25,35 @@
 
 <script>
 import Navbar from "~/components/Navbar.vue";
+import PostItem from "~/components/PostItem.vue";
 
 export default {
   components: {
-    Navbar
+    Navbar,
+    PostItem
+  },
+  data() {
+    return {
+      posts: [
+        {
+          _id: 1,
+          title: "First Title",
+          subtitle: "First Sub-title",
+          createdAt: new Date()
+        },
+        {
+          _id: 2,
+          title: "Second Title",
+          subtitle: "Second Sub-title",
+          createdAt: new Date()
+        }
+      ]
+    };
   }
 };
 </script>
 
-<style scoped>
+<style>
 .post-content {
   font-style: italic;
 }
