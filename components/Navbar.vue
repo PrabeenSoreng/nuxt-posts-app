@@ -9,6 +9,7 @@
           />
         </a>
         <div
+          @click="toggleIsActive"
           class="navbar-burger burger"
           aria-label="menu"
           aria-expanded="false"
@@ -19,9 +20,17 @@
           <span></span>
         </div>
       </div>
-      <div id="navMenu" class="navbar-menu">
+      <div
+        id="navMenu"
+        class="navbar-menu"
+        :class="{ 'is-active': isActive }"
+        @click="toggleIsActive"
+      >
         <div class="navbar-end">
-          <div class="navbar-item has-dropdown">
+          <div
+            class="navbar-item has-dropdown"
+            :class="{ 'is-active': isActive }"
+          >
             <a class="navbar-link">Menu</a>
             <div class="navbar-dropdown">
               <a class="navbar-item">Dashboard</a>
@@ -36,3 +45,18 @@
     </div>
   </nav>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      isActive: false
+    };
+  },
+  methods: {
+    toggleIsActive() {
+      this.isActive = !this.isActive;
+    }
+  }
+};
+</script>
