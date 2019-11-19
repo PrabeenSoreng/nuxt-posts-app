@@ -39,12 +39,14 @@ export default {
           _id: 1,
           title: "First Title",
           subtitle: "First Sub-title",
+          isRead: true,
           createdAt: new Date()
         },
         {
           _id: 2,
           title: "Second Title",
           subtitle: "Second Sub-title",
+          isRead: false,
           createdAt: new Date()
         }
       ]
@@ -53,16 +55,4 @@ export default {
 };
 </script>
 
-<style>
-.post-content {
-  font-style: italic;
-}
-.post {
-  margin-bottom: 20px;
-  padding: 5px;
-  border-bottom: 2px solid transparent;
-}
-.post:hover {
-  border-bottom: 2px solid #e8e8e8;
-}
-</style>
+<style></style>
