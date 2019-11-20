@@ -27,17 +27,14 @@
         @click="toggleIsActive"
       >
         <div class="navbar-end">
-          <div
-            class="navbar-item has-dropdown"
-            :class="{ 'is-active': isActive }"
-          >
+          <div class="navbar-item has-dropdown" :class="{ 'is-active': isActive }">
             <a class="navbar-link">Menu</a>
             <div class="navbar-dropdown">
-              <a class="navbar-item">Dashboard</a>
-              <a class="navbar-item">Profile</a>
-              <a class="navbar-item">Settings</a>
+              <nuxt-link to="/" class="navbar-item">Home</nuxt-link>
+              <nuxt-link to="/manage" class="navbar-item">Manage</nuxt-link>
+              <!-- <a class="navbar-item">Settings</a>
               <hr class="navbar-divider" />
-              <div class="navbar-item">Logout</div>
+              <div class="navbar-item">Logout</div>-->
             </div>
           </div>
         </div>

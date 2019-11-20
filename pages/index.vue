@@ -26,6 +26,7 @@
 <script>
 import Navbar from "~/components/Navbar.vue";
 import PostItem from "~/components/PostItem.vue";
+import { fetchPostsApi } from "~/store/post.js";
 
 export default {
   components: {
@@ -35,9 +36,20 @@ export default {
   data() {
     return {};
   },
+  fetch({ store }) {
+    if (store.getters["post/hasEmptyItems"])
+      return store.dispatch("post/fetchPosts");
+  },
+  // async asyncData() {
+  //   const posts = await fetchPostsApi();
+  //   return { posts };
+  // }
+  // mounted() {
+  //   this.$store.dispatch("post/fetchPosts");
+  // },
   computed: {
     posts() {
-      return this.$store.state.posts;
+      return this.$store.state.post.items;
     }
   }
 };
