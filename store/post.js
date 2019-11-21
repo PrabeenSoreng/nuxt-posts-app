@@ -1,4 +1,5 @@
 import { INITIAL_DATA } from "./index.js";
+import Vue from "vue";
 
 export function fetchPostsApi() {
   return new Promise((res, rej) => {
@@ -26,6 +27,10 @@ export const mutations = {
   },
   addPost(state, post) {
     state.items.push(post);
+  },
+  replacePost(state, { post, index }) {
+    // state.items[index] = post;
+    Vue.set(state.items, index, post);
   }
 };
 
@@ -41,5 +46,10 @@ export const actions = {
       .substr(2, 7);
     postData.createdAt = new Date();
     commit("addPost", postData);
+  },
+  updatePost({ commit, state }, postData) {
+    const postIndex = state.items.findIndex(post => post._id === postData._id);
+    if (postIndex !== -1)
+      commit("replacePost", { post: postData, index: postIndex });
   }
 };

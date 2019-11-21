@@ -12,7 +12,13 @@
         <div class="column is-4 messages hero is-fullheight" id="message-feed">
           <div class="inbox-messages" id="inbox-messages">
             <!-- Card Start -->
-            <div class="card" v-for="post in posts" :key="post._id">
+            <div
+              class="card"
+              :class="{'is-active': activePost && post._id === activePost._id}"
+              v-for="post in posts"
+              :key="post._id"
+              @click="activatePost(post)"
+            >
               <div class="card-content">
                 <div class="msg-header">
                   <span class="msg-from">
@@ -36,19 +42,9 @@
             <!-- Card End -->
           </div>
         </div>
-        <div class="column is-6 message hero is-fullheight is-hidden" id="message-pane">
+        <div class="column is-6 message hero is-fullheight" id="message-pane">
           <div class="box message-preview">
-            <div class="top">
-              <div class="avatar">
-                <img src="https://placehold.it/128x128" />
-              </div>
-              <div class="address">
-                <div class="name">John Smith</div>
-                <div class="email">someone@gmail.com</div>
-              </div>
-              <hr />
-              <div class="content"></div>
-            </div>
+            <PostUpdate :postData="activePost" />
           </div>
         </div>
       </div>
@@ -78,15 +74,24 @@
 <script>
 import Navbar from "~/components/Navbar.vue";
 import PostCreate from "~/components/PostCreate.vue";
+import PostUpdate from "~/components/PostUpdate.vue";
 import { mapState } from "vuex";
 
 export default {
   components: {
     Navbar,
-    PostCreate
+    PostCreate,
+    PostUpdate
   },
   data() {
-    return {};
+    return {
+      activePost: {}
+    };
+  },
+  created() {
+    if (this.posts && this.posts.length > 0) {
+      this.activePost = this.posts[0];
+    }
   },
   fetch({ store }) {
     if (store.getters["post/hasEmptyItems"])
@@ -96,6 +101,11 @@ export default {
     ...mapState({
       posts: state => state.post.items
     })
+  },
+  methods: {
+    activatePost(post) {
+      this.activePost = post;
+    }
   }
 };
 </script>
@@ -109,6 +119,9 @@ export default {
 }
 .card:hover {
   cursor: pointer;
+  background-color: #eeeeee;
+}
+.card.is-active {
   background-color: #eeeeee;
 }
 </style>
