@@ -18,7 +18,7 @@
           <slot></slot>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success">Save changes</button>
+          <button @click="formSubmit" class="button is-success">Save changes</button>
           <!-- Close Modal -->
           <button @click="isActive = false" class="button">Cancel</button>
         </footer>
@@ -33,6 +33,14 @@ export default {
     return {
       isActive: false
     };
+  },
+  methods: {
+    formSubmit() {
+      this.$emit("postCreateSubmitted", this.closeModal);
+    },
+    closeModal() {
+      this.isActive = false;
+    }
   }
 };
 </script>
