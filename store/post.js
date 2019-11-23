@@ -47,13 +47,20 @@ export const actions = {
     postData.isRead = false;
     postData.createdAt = new Date().getTime();
 
-    return this.$axios.$post("/api/posts", postData).then(() => {
+    return this.$axios.$post("/api/posts", postData).then(res => {
+      console.log(res);
       commit("addPost", postData);
     });
   },
   updatePost({ commit, state }, postData) {
     const postIndex = state.items.findIndex(post => post._id === postData._id);
-    if (postIndex !== -1)
-      commit("replacePost", { post: postData, index: postIndex });
+    if (postIndex !== -1) {
+      return this.$axios
+        .$put(`/api/posts/${postData._id}`, postData)
+        .then(res => {
+          console.log(res);
+          commit("replacePost", { post: postData, index: postIndex });
+        });
+    }
   }
 };

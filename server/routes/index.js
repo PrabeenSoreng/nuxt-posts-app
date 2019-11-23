@@ -22,16 +22,34 @@ router.post("/api/posts", (req, res, next) => {
     err => {
       if (err) return res.status(422).json(err);
       res.status(200).json({
-        message: "Data has been saved."
+        message: "Post created successfully."
       });
     }
   );
 });
 
-router.patch("/api/posts/:id", (req, res, next) => {
-  res.status(200).json({
-    message: "Data has been updated."
-  });
+router.put("/api/posts/:id", (req, res, next) => {
+  const id = req.params.id;
+  const post = req.body;
+  const index = initialData.posts.findIndex(el => el._id == post._id);
+
+  if (index != -1) {
+    initialData.posts[index] = post;
+    fs.writeFile(
+      path.join(__dirname, filePath),
+      JSON.stringify(initialData, null, 2),
+      err => {
+        if (err) return res.status(422).json(err);
+        res.status(200).json({
+          message: "Post successfully updated."
+        });
+      }
+    );
+  } else {
+    res.status(422).json({
+      message: "Post not found!"
+    });
+  }
 });
 
 router.delete("/api/posts/:slug", (req, res, next) => {
