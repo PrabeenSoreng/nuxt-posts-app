@@ -1,0 +1,36 @@
+{
+  "posts": [
+    {
+      "_id": 1,
+      "title": "First Title",
+      "subtitle": "First Sub-title",
+      "content": "Comment on first title",
+      "isRead": true,
+      "createdAt": 1574472471612
+    },
+    {
+      "_id": 2,
+      "title": "Second Title",
+      "subtitle": "Second Sub-title",
+      "content": "Comment on second title",
+      "isRead": false,
+      "createdAt": 1574472494730
+    },
+    {
+      "title": "Nuxt Project",
+      "subtitle": "Awesome Project",
+      "content": "Some contents...",
+      "_id": "5mabagx",
+      "isRead": false,
+      "createdAt": 1574483626700
+    },
+    {
+      "title": "Awesome Title",
+      "subtitle": "Awesome Subtitle",
+      "content": "Awesome content...",
+      "_id": "nuwektj",
+      "isRead": false,
+      "createdAt": 1574487234292
+    }
+  ]
+}

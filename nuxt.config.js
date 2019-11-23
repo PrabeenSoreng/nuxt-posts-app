@@ -49,6 +49,7 @@ module.exports = {
   /*
    ** Build configuration
    */
+  serverMiddleware: ["~/server/routes/index"],
   build: {
     postcss: {
       preset: {

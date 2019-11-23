@@ -1,4 +1,4 @@
-import { INITIAL_DATA } from "./index.js";
+import INITIAL_DATA from "./initial_data.json";
 import Vue from "vue";
 
 export function fetchPostsApi() {
@@ -44,8 +44,12 @@ export const actions = {
     postData._id = Math.random()
       .toString(36)
       .substr(2, 7);
-    postData.createdAt = new Date();
-    commit("addPost", postData);
+    postData.isRead = false;
+    postData.createdAt = new Date().getTime();
+
+    return this.$axios.$post("/api/posts", postData).then(() => {
+      commit("addPost", postData);
+    });
   },
   updatePost({ commit, state }, postData) {
     const postIndex = state.items.findIndex(post => post._id === postData._id);
