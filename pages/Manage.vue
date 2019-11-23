@@ -10,11 +10,17 @@
           <PostCreate />
         </aside>
         <div class="column is-4 messages hero is-fullheight" id="message-feed">
-          <div class="inbox-messages" id="inbox-messages">
+          <div
+            v-if="posts && posts.length > 0"
+            class="inbox-messages"
+            id="inbox-messages"
+          >
             <!-- Card Start -->
             <div
               class="card"
-              :class="{'is-active': activePost && post._id === activePost._id}"
+              :class="{
+                'is-active': activePost && post._id === activePost._id
+              }"
               v-for="post in posts"
               :key="post._id"
               @click="activatePost(post)"
@@ -41,9 +47,15 @@
             </div>
             <!-- Card End -->
           </div>
+          <div class="inbox-messages no-posts-title" v-else>
+            There are no posts :(
+          </div>
         </div>
         <div class="column is-6 message hero is-fullheight" id="message-pane">
-          <div class="box message-preview">
+          <div v-if="activePost" class="box message-preview">
+            <button @click="deletePost" class="button is-danger delete-button">
+              Delete
+            </button>
             <PostUpdate :postData="activePost" />
           </div>
         </div>
@@ -55,9 +67,7 @@
               <strong>Bulma Templates</strong> by
               <a href="https://github.com/dansup">Daniel Supernault</a>. The
               source code is licensed
-              <a
-                href="http://opensource.org/licenses/mit-license.php"
-              >MIT</a>.
+              <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
             </p>
             <p>
               <a class="icon" href="https://github.com/dansup/bulma-templates">
@@ -85,13 +95,11 @@ export default {
   },
   data() {
     return {
-      activePost: {}
+      activePost: null
     };
   },
   created() {
-    if (this.posts && this.posts.length > 0) {
-      this.activePost = this.posts[0];
-    }
+    this.setInitialActivePost();
   },
   fetch({ store }) {
     if (store.getters["post/hasEmptyItems"])
@@ -105,6 +113,18 @@ export default {
   methods: {
     activatePost(post) {
       this.activePost = post;
+    },
+    setInitialActivePost() {
+      if (this.posts && this.posts.length > 0) {
+        this.activePost = this.posts[0];
+      } else {
+        this.activePost = null;
+      }
+    },
+    deletePost() {
+      this.$store.dispatch("post/deletePost", this.activePost._id).then(() => {
+        this.setInitialActivePost();
+      });
     }
   }
 };
@@ -123,5 +143,14 @@ export default {
 }
 .card.is-active {
   background-color: #eeeeee;
+}
+.delete-button {
+  display: block;
+  width: 100px;
+  margin-left: auto;
+  margin-right: 0;
+}
+.no-posts-title {
+  font-size: 30px;
 }
 </style>
