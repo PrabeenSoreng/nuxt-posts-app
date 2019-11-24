@@ -11,7 +11,16 @@
                   <h1>Newest Posts</h1>
                   <hr />
                 </div>
-                <PostItem v-for="post in posts" :key="post._id" :post="post" />
+                <div v-if="posts && posts.length > 0">
+                  <PostItem
+                    v-for="post in posts"
+                    :key="post._id"
+                    :post="post"
+                  />
+                </div>
+                <div class="no-posts-title" v-else>
+                  No Posts :(
+                </div>
               </div>
               <!-- end of post -->
             </div>
@@ -47,12 +56,22 @@ export default {
   // mounted() {
   //   this.$store.dispatch("post/fetchPosts");
   // },
+  mounted() {
+    this.$store.dispatch("post/getArchivedPosts");
+  },
   computed: {
     posts() {
       return this.$store.state.post.items;
+    },
+    archivedPosts() {
+      return this.$store.state.post.archivedItems;
     }
   }
 };
 </script>
 
-<style></style>
+<style>
+.no-posts-title {
+  font-size: 30px;
+}
+</style>

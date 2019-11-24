@@ -11,7 +11,7 @@
     </div>
     <div class="post-right">
       <label class="checkbox">
-        <input type="checkbox" :checked="post.isRead" />
+        <input @change="togglePost" type="checkbox" :checked="isArchived" />
         Read
       </label>
     </div>
@@ -23,6 +23,19 @@ export default {
   props: ["post"],
   data() {
     return {};
+  },
+  computed: {
+    archivedPosts() {
+      return this.$store.state.post.archivedItems;
+    },
+    isArchived() {
+      return this.archivedPosts.includes(this.post._id);
+    }
+  },
+  methods: {
+    togglePost() {
+      this.$store.dispatch("post/toggleArchivedPosts", this.post._id);
+    }
   }
 };
 </script>

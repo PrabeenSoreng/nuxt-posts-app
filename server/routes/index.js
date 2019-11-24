@@ -9,7 +9,8 @@ const initialData = require(filePath);
 
 router.get("/api/posts", (req, res, next) => {
   res.status(200).json({
-    message: "Just some testing data."
+    message: "Just some testing data.",
+    posts: initialData.posts
   });
 });
 
