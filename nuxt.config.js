@@ -14,7 +14,11 @@ module.exports = {
         content: process.env.npm_package_description || ""
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    script: [
+      // <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+      { src: "https://cdn.jsdelivr.net/npm/marked/marked.min.js" }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -23,7 +27,7 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ["@/assets/scss/main.scss"],
   /*
    ** Plugins to load before mounting the App
    */
