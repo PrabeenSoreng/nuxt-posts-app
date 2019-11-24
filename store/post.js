@@ -1,5 +1,6 @@
 import INITIAL_DATA from "./initial_data.json";
 import Vue from "vue";
+import consolaGlobalInstance from "consola";
 
 export function fetchPostsApi() {
   return new Promise((res, rej) => {
@@ -11,6 +12,7 @@ export function fetchPostsApi() {
 
 export const state = () => {
   return {
+    item: {},
     items: [],
     archivedItems: []
   };
@@ -25,6 +27,9 @@ export const getters = {
 export const mutations = {
   setPosts(state, posts) {
     state.items = posts;
+  },
+  setPost(state, post) {
+    state.item = post;
   },
   setArchivedPosts(state, archivedPosts) {
     state.archivedItems = archivedPosts;
@@ -51,6 +56,12 @@ export const actions = {
   fetchPosts({ commit }) {
     return this.$axios.$get("/api/posts").then(res => {
       commit("setPosts", res.posts);
+    });
+  },
+  fetchPostById({ commit }, postId) {
+    return this.$axios.$get("/api/posts").then(res => {
+      const selectedPost = res.posts.find(post => post._id == postId);
+      commit("setPost", selectedPost);
     });
   },
   getArchivedPosts({ commit }) {
